@@ -18,10 +18,10 @@ lastPrime = 0
 #print(len(myList))
 
 # default box values
-dBox1 = {"D", "A", "V", "U", "Z", "E", "S", "C", "G"}
-dBox2 = {"K", "I", "R", "L"}
-dBox3 = {"B", "N", "F", "X", "O", "Y", "Q", "J", "P"}
-dBox4 = {"M", "T", "H", "W"}
+dBox1 = {"D", "A", "V", "U", "Z", "E", "S", "C", "G"} # 0 - 8
+dBox2 = {"K", "I", "R", "L"} # 9 - 12
+dBox3 = {"B", "N", "F", "X", "O", "Y", "Q", "J", "P"} # 13 - 21
+dBox4 = {"M", "T", "H", "W"} # 22 - 25
 
 #current box values
 box1 = ["D", "A", "V", "U", "Z", "E", "S", "C", "G"]
@@ -104,8 +104,9 @@ def int_to_string():
 def interpret_int():
     text = input("enter a code seperated by double spaces: ")
     digits = [x for x in text]
-    #print(digits)
-    print(scan_digits(digits))
+    coded = (scan_digits(digits))
+    find_letters(coded)
+    
 
 # combines message into proper numbers and lists
 def scan_digits(code):
@@ -117,21 +118,51 @@ def scan_digits(code):
             skip = skip + 1
             if skip == 2:
                 send.append(current)
-                send.append("_")
                 skip = 0
                 current = ""
+        elif code[x] == "_":
+            send.append("-")
+            skip = 0
         else:
             current += code[x]
 
     return(send)
 
-# 1  12  15  11  5  0
+def find_letters(num):
+    print(num)
+    boxLocation = []
+    boxIndex = []
+    for x in range(len(num)):
+        index, boxNum = make_index(num[x])
+        print(index, boxNum)
+
+def make_index(num):
+    if num == "_":
+        return("_", "_")
+    elif num == "-":
+        return("-", "-")
+    else:
+        num = int(num)
+        if num > 21:
+            num -= 21
+            return(num, 3)
+        elif num > 12:
+            num-= 12
+            return(num, 2)
+        elif num > 8:
+            num-=8
+            return(num, 1)
+        else:
+            return(num, 0)
+              
+
+# 1  12  15  11  5  0  _  22  1  23  23  24  5  25   
 
 
 def repeat():
     #current_box()
-    string_to_int()
-    #int_to_string()
+    #string_to_int()
+    int_to_string()
     repeat()
     
 repeat()
