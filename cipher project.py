@@ -29,6 +29,7 @@ box2 = ["K", "I", "R", "L"]
 box3 = ["B", "N", "F", "X", "O", "Y", "Q", "J", "P"]
 box4 = ["M", "T", "H", "W"]
 boxes = [box1, box2, box3, box4]
+boxes2 = box1 + box2 + box3 + box4
 
 #post-shuffle box sample
 def current_box():
@@ -99,14 +100,18 @@ def box_number(boxNumber, number):
 # prompts and deciphers code
 def int_to_string():
     message = interpret_int()
-
-# prompts a code to begin 
+    decoded = ""
+    for i in range(len(message)):
+        decoded += (str(message[i]))
+    print(decoded)
+# prompts a code to begin then print code
 def interpret_int():
     text = input("enter a code seperated by double spaces: ")
     digits = [x for x in text]
     coded = (scan_digits(digits))
-    find_letters(coded)
-    
+    message = decode(coded)
+    return(message)
+        
 
 # combines message into proper numbers and lists
 def scan_digits(code):
@@ -121,49 +126,40 @@ def scan_digits(code):
                 skip = 0
                 current = ""
         elif code[x] == "_":
-            send.append("-")
-            skip = 0
+            current = "_"
         else:
             current += code[x]
+            skip = 0
 
     return(send)
 
-def find_letters(num):
-    print(num)
-    boxLocation = []
-    boxIndex = []
-    for x in range(len(num)):
-        index, boxNum = make_index(num[x])
-        print(index, boxNum)
 
-def make_index(num):
-    if num == "_":
-        return("_", "_")
-    elif num == "-":
-        return("-", "-")
-    else:
-        num = int(num)
-        if num > 21:
-            num -= 21
-            return(num, 3)
-        elif num > 12:
-            num-= 12
-            return(num, 2)
-        elif num > 8:
-            num-=8
-            return(num, 1)
+def get_letter(boxIndex, boxNumber):
+    code = []
+    
+    for i in range(len(boxNumber)):
+        if boxNumber[i] == "_":
+            code.append(" ")
         else:
-            return(num, 0)
-              
-
+            print(boxes[boxNumber[i]].index(boxIndex[i]))
+            
+def decode(coded):
+    message = []
+    for i in range(len(coded)):
+        if coded[i] == "_":
+            message.append("_")
+        else:
+            index = int(coded[i])
+            message.append(boxes2[index])
+    return(message)
 # 1  12  15  11  5  0  _  22  1  23  23  24  5  25   
 
 
 def repeat():
     #current_box()
-    #string_to_int()
+    string_to_int()
     int_to_string()
     repeat()
     
 repeat()
-
+#shuffle_tests()
