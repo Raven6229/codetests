@@ -30,7 +30,7 @@ box3 = ["B", "N", "F", "X", "O", "Y", "Q", "J", "P"]
 box4 = ["M", "T", "H", "W"]
 boxes = [box1, box2, box3, box4]
 
-#post-shuffle box
+#post-shuffle box sample
 def current_box():
     print(box1[0] + " " + box1[1] + " " + box1[2] + "    " +
           box2[0] + "    " +
@@ -52,8 +52,7 @@ def current_box():
 # prompts and prints the code
 def string_to_int():
     string = ""
-    code = interpret_string()
-    code = list(map(str, code))
+    code = list(map(str, interpret_string()))
     for x in range(len(code)):
         string =(string + code[x] + "  ")
     print(string)
@@ -90,23 +89,25 @@ def box_check(x, i):
 # Fixes the box number
 def box_number(boxNumber, number):
     if boxNumber > 0:
-        number = number + 9
+        number += 9
     if boxNumber > 1:
-        number = number + 4
+        number += 4
     if boxNumber > 2:
-        number = number + 9   
+        number += 9   
     return(number)
 
 # prompts and deciphers code
 def int_to_string():
     message = interpret_int()
 
+# prompts a code to begin 
 def interpret_int():
     text = input("enter a code seperated by double spaces: ")
     digits = [x for x in text]
     #print(digits)
     print(scan_digits(digits))
 
+# combines message into proper numbers and lists
 def scan_digits(code):
     current = ""
     skip = 0
@@ -120,18 +121,17 @@ def scan_digits(code):
                 skip = 0
                 current = ""
         else:
-            current = current + code[x]
+            current += code[x]
 
     return(send)
-    #return(send)          
 
 # 1  12  15  11  5  0
 
 
 def repeat():
     #current_box()
-    #string_to_int()
-    int_to_string()
+    string_to_int()
+    #int_to_string()
     repeat()
     
 repeat()
