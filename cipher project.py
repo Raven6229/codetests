@@ -156,40 +156,47 @@ def decode(coded):
 # START OF THE SHUFFLE FUNCTIONS
 
 # sample list
-shuf = [39, 39]
+shuf = [39, 39, 4, 9, 7, 7]
 
 
 def shuffle_tests():
     # active shuffles variables
-    # shuffle = []
+    shuffles = {shuffle_even(i), shuffle_odd(i), shuffle_prime(i),
+                next_prime(i), duplicate(i)}
+    activeShuffles = []
     lastshuffle = 0
+    lastprime = 0
 
     for i in range(len(shuf)):
-        if is_prime(shuf[i]):
-            lastprime = shuf[i]
-        else:
-            lastprime = 0
-        call_shuffle(shuf[i], lastshuffle, lastprime)
-        lastshuffle = shuf[i]
-
+        # 0 = no, 1 = duplicate shuffle, 2 = duplicate prime
+        
+        lastshuffle, lastprime = is_dupe(shuf[i], lastshuffle, lastprime)
 
 # Shuffle functions
-def call_shuffle(num, lastshuffle, lastprime):
-    if num == lastshuffle:
-        duplicate()
+def call_shuffle(num):
+    if num % 2 == 0:
+        shuffle_even(num)
+    elif is_prime(num):
+        shuffle_prime(num)
     else:
-        if num % 2 == 0:
-            shuffle_even()
+        shuffle_odd(num)
 
+
+def is_dupe(num, lastshuffle, lastprime):
+    shuffle = lastshuffle
+    prime = lastprime
+    if is_prime(num):
+        if num == lastprime:
+            activeShuffles.append(3)
         else:
-            if is_prime(num):
-                if lastprime != num:
-                    shuffle_prime()
-                else:
-                    next_prime()
-            else:
-                shuffle_odd()
+            activeShuffles.append(2)
+        prime = num
 
+    elif num == lastshuffle:
+        activeShuffles.append(4)
+    else:
+
+    
 
 def is_prime(num):
     isprime = True
@@ -203,27 +210,27 @@ def is_prime(num):
 
 
 # even: rotate clockwise
-def shuffle_even():
+def shuffle_even(num):
     print("even or zero")
 
 
 # odd: rotate counterclockwise
-def shuffle_odd():
+def shuffle_odd(num):
     print("odd")
 
 
 # prime: reverse dots
-def shuffle_prime():
+def shuffle_prime(num):
     print("prime")
 
 
 # next prime: reset all changes
-def next_prime():
+def next_prime(num):
     print("next prime")
 
 
 # duplicate as last: reverse triangles with adjecent squares
-def duplicate():
+def duplicate(num):
     print("duplicate")
 
 
