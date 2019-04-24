@@ -11,23 +11,6 @@ permanentSet = '''
 '''
 # trial project
 
-# -Shuffles
-
-# even: rotate clockwise
-# odd: rotate counterclockwise
-# prime: reverse dots
-# next prime: reset all changes
-# duplicate as last: reverse triangles with adjecent squares
-
-# active shuffles
-shuffle = []
-lastShuffle = 0
-lastPrime = 0
-
-# Shuffles-
-
-# print(len(myList))
-
 # default box values
 dBox1 = {"D", "A", "V", "U", "Z", "E", "S", "C", "G"}  # 0 - 8
 dBox2 = {"K", "I", "R", "L"}  # 9 - 12
@@ -170,6 +153,83 @@ def decode(coded):
     return message
 
 
+# START OF THE SHUFFLE FUNCTIONS
+
+# sample list
+shuf = [39, 39]
+
+
+def shuffle_tests():
+    # active shuffles variables
+    # shuffle = []
+    lastshuffle = 0
+
+    for i in range(len(shuf)):
+        if is_prime(shuf[i]):
+            lastprime = shuf[i]
+        else:
+            lastprime = 0
+        call_shuffle(shuf[i], lastshuffle, lastprime)
+        lastshuffle = shuf[i]
+
+
+# Shuffle functions
+def call_shuffle(num, lastshuffle, lastprime):
+    if num == lastshuffle:
+        duplicate()
+    else:
+        if num % 2 == 0:
+            shuffle_even()
+
+        else:
+            if is_prime(num):
+                if lastprime != num:
+                    shuffle_prime()
+                else:
+                    next_prime()
+            else:
+                shuffle_odd()
+
+
+def is_prime(num):
+    isprime = True
+    x = 2
+    while x < num:
+        if num % x == 0:
+            isprime = False
+            break
+        x += 1
+    return isprime
+
+
+# even: rotate clockwise
+def shuffle_even():
+    print("even or zero")
+
+
+# odd: rotate counterclockwise
+def shuffle_odd():
+    print("odd")
+
+
+# prime: reverse dots
+def shuffle_prime():
+    print("prime")
+
+
+# next prime: reset all changes
+def next_prime():
+    print("next prime")
+
+
+# duplicate as last: reverse triangles with adjecent squares
+def duplicate():
+    print("duplicate")
+
+
+# Shuffles-
+
+
 # 1  12  15  11  5  0  _  22  1  23  23  24  5  25
 
 
@@ -180,5 +240,5 @@ def repeat():
     repeat()
 
 
-repeat()
-# shuffle_tests()
+# repeat()
+shuffle_tests()
