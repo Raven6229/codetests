@@ -1,0 +1,73 @@
+
+# START OF THE SHUFFLE FUNCTIONS
+
+# sample list
+shuf = [39, 4, 7, 18]
+
+
+def shuffle_tests():
+    # active shuffles variables
+    shuffle = []
+    lastshuffle = 0
+    lastprime = 0
+
+    current_box()
+    for i in range(len(shuf)):
+        call_shuffle(shuf[i], lastshuffle, lastprime)
+
+
+# Shuffle functions
+def call_shuffle(num, lastshuffle, lastprime):
+    if num == lastshuffle(0):
+        duplicate()
+    else:
+        if num % 2 == 0 or num == 0:
+            shuffle_even()
+
+        else:
+            if is_prime(num):
+                if lastprime != num:
+                    shuffle_prime()
+                else:
+                    next_prime()
+            else:
+                shuffle_odd()
+    #lastshuffle = num
+    #print("last suffle:")
+    #print(lastshuffle)
+
+def is_prime(num):
+    isprime = True
+    x = 2
+    while x < num:
+        if num % x == 0:
+            isprime = False
+            break
+        x += 1
+    return isprime
+
+
+# even: rotate clockwise
+def shuffle_even():
+    print("even or zero")
+
+
+# odd: rotate counterclockwise
+def shuffle_odd():
+    print("odd")
+
+
+# prime: reverse dots
+def shuffle_prime():
+    print("prime")
+
+
+# next prime: reset all changes
+def next_prime():
+    print("next prime")
+
+
+# duplicate as last: reverse triangles with adjecent squares
+def duplicate():
+    print(duplicate)
+
